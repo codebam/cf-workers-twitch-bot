@@ -21,7 +21,7 @@ import renew_oauth from "./oauth";
 interface Environment {
   SECRET_TWITCH_CLIENT_ID: string;
   SECRET_TWITCH_CLIENT_SECRET: string;
-  KV_BOT_STORAGE: KVNamespace;
+  KV_TWITCH_STORAGE: KVNamespace;
 }
 
 export default {
@@ -31,13 +31,17 @@ export default {
     ctx: EventContext<Environment, string, "">
   ) =>
     ctx.waitUntil(
-      renew_oauth(env.SECRET_TWITCH_CLIENT_ID, env.SECRET_TWITCH_CLIENT_SECRET)
+      renew_oauth(
+        env.SECRET_TWITCH_CLIENT_ID,
+        env.SECRET_TWITCH_CLIENT_SECRET,
+        env.KV_TWITCH_STORAGE
+      )
     ),
   fetch: async (request: Request, env: Environment) =>
     renew_oauth(
       env.SECRET_TWITCH_CLIENT_ID,
       env.SECRET_TWITCH_CLIENT_SECRET,
-      env.KV_BOT_STORAGE
+      env.KV_TWITCH_STORAGE
     ),
   // fetch: async (request: Request, env: Environment) =>
   //   new Handler([
