@@ -6,7 +6,8 @@ export default (client_id: string, client_secret: string, kv: KVNamespace) =>
       client_id,
       client_secret,
       grant_type: "client_credentials",
-    }).href
+    }).href,
+    { method: "POST" }
   )
     .then((response) => response.text())
     .then((text) => kv.put("oauth", text));
