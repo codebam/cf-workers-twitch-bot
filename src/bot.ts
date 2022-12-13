@@ -19,7 +19,7 @@ export default class Bot {
   constructor(config: Config) {
     this.token = config.token || null;
     this.commands = config.commands;
-    this.api = new URL(`https://api.telegram.org/bot${config.token}`);
+    this.api = new URL("https://api.twitch.tv/helix/eventsub/subscriptions");
     this.webhook = new Webhook(this.api, config.token, config.url);
     this.kv = config.kv || null;
     this.handler = config.handler;

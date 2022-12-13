@@ -1,4 +1,4 @@
-name = "cf-workers-telegram-bot"
+name = "cf-workers-twitch-bot"
 main = "dist/worker.mjs"
 
 account_id = ""
