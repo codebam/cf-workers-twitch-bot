@@ -12,14 +12,14 @@ export type Commands = Record<string, Command>;
 
 export class Config {
   bot_name: string;
-  token: string;
+  client_id: string;
   commands: Record<string, Command>;
   kv: KVNamespace;
   url: URL;
   handler: Handler;
   constructor(config: PartialConfig = {}) {
     this.bot_name = config.bot_name || "";
-    this.token = config.token || "";
+    this.client_id = config.client_id || "";
     this.commands = config.commands || {};
     this.kv = config.kv;
     this.url = config.url;
@@ -29,11 +29,17 @@ export class Config {
 
 export type PartialConfig = {
   bot_name?: string;
-  token?: string;
+  client_id?: string;
   commands?: Record<string, Command>;
   kv?: KVNamespace;
   url?: URL;
   handler?: Handler;
+};
+
+export type TwitchOAuthResponse = {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
 };
 
 export type Joke = {

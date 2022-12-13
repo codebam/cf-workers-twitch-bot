@@ -18,12 +18,12 @@ export default class Handler {
         )
       )
     ) &&
-      bot.token &&
+      bot.client_id &&
       bot.webhook.process(new URL(request.url))) ??
     this.responses.default;
 
   postResponse = async (request: Request, bot: Bot): Promise<Response> =>
-    (bot.token &&
+    (bot.client_id &&
       request
         .json()
         .then((update) => bot.update(new TelegramUpdate(update)))) ??
@@ -40,7 +40,7 @@ export default class Handler {
   > =>
     Promise.all(
       this.configs.map((bot_config) =>
-        sha256(bot_config.token).then((hash) => [hash, bot_config])
+        sha256(bot_config.client_id).then((hash) => [hash, bot_config])
       )
     ).then((result) => Object.fromEntries(result));
 

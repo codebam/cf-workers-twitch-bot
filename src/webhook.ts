@@ -2,26 +2,26 @@ import { JSONResponse, sha256, addSearchParams, responseToJSON } from "./libs";
 
 export default class Webhook {
   api: URL;
-  token: string;
+  client_id: string;
+  kv: KVNamespace;
   url: URL;
 
-  constructor(api: URL, token: string, url: URL) {
+  constructor(api: URL, client_id: string, kv: KVNamespace, url: URL) {
     this.api = api;
-    this.token = token;
+    this.client_id = client_id;
+    this.kv = kv;
     this.url = url;
   }
 
   // trigger getMe command of BotAPI
   getMe = () => this.execute(new URL(`${this.api}/getMe`));
 
-  set = async (drop_pending_updates = true): Promise<Response> =>
-    sha256(this.token).then((access_key) =>
+  set = async (): Promise<Response> =>
+    sha256(this.client_id).then((access_key) =>
       this.execute(
-        addSearchParams(new URL(`${this.api.href}/setWebhook`), {
-          url: `${this.url.href}/${access_key}`,
-          max_connections: "100",
-          allowed_updates: JSON.stringify(["message", "inline_query"]),
-          drop_pending_updates: drop_pending_updates.toString(),
+        addSearchParams(new URL(this.api.href), {
+          type: "channel....... and we're done
+          callback: `${this.url.href}/${access_key}`,
         })
       )
     );

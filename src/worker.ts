@@ -28,7 +28,7 @@ export default {
   scheduled: async (
     event: Event,
     env: Environment,
-    ctx: EventContext<Environment, string, "">
+    ctx: EventContext<Environment, string, string>
   ) =>
     ctx.waitUntil(
       renew_oauth(
@@ -38,31 +38,23 @@ export default {
       )
     ),
   fetch: async (request: Request, env: Environment) =>
-    renew_oauth(
-      env.SECRET_TWITCH_CLIENT_ID,
-      env.SECRET_TWITCH_CLIENT_SECRET,
-      env.KV_TWITCH_STORAGE
-    ),
-  // fetch: async (request: Request, env: Environment) =>
-  //   new Handler([
-  //     {
-  //       bot_name: "cf-workers-twitch-bot",
-  //       client_id: env.SECRET_TWITCH_CLIENT_ID,
-  //       commands: {
-  //         "!chatinfo": commands.chatInfo,
-  //         "!ping": commands.ping,
-  //         "!toss": commands.toss,
-  //         "!balance": commands.balance,
-  //         "!epoch": commands.epoch,
-  //         "!kanye": commands.kanye,
-  //         "!bored": commands.bored,
-  //         "!joke": commands.joke,
-  //         "!roll": commands.roll,
-  //         "!get": commands._get,
-  //         "!set": commands._set,
-  //         "!code": commands.code,
-  //       },
-  //       kv: env.KV_BOT_STORAGE,
-  //     },
-  //   ]).handle(request),
+    new Handler([
+      {
+        bot_name: "cf-workers-twitch-bot",
+        client_id: env.SECRET_TWITCH_CLIENT_ID,
+        commands: {
+          "!ping": commands.ping,
+          "!toss": commands.toss,
+          "!epoch": commands.epoch,
+          "!kanye": commands.kanye,
+          "!bored": commands.bored,
+          "!joke": commands.joke,
+          "!roll": commands.roll,
+          "!get": commands._get,
+          "!set": commands._set,
+          "!code": commands.code,
+        },
+        kv: env.KV_TWITCH_STORAGE,
+      },
+    ]).handle(request),
 };

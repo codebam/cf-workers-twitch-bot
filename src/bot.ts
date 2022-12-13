@@ -9,7 +9,7 @@ import {
 import Handler from "./handler";
 
 export default class Bot {
-  token: string;
+  client_id: string;
   commands: Commands;
   api: URL;
   webhook: Webhook;
@@ -17,10 +17,15 @@ export default class Bot {
   handler: Handler;
 
   constructor(config: Config) {
-    this.token = config.token || null;
+    this.client_id = config.client_id || null;
     this.commands = config.commands;
     this.api = new URL("https://api.twitch.tv/helix/eventsub/subscriptions");
-    this.webhook = new Webhook(this.api, config.token, config.url);
+    this.webhook = new Webhook(
+      this.api,
+      config.client_id,
+      config.kv,
+      config.url
+    );
     this.kv = config.kv || null;
     this.handler = config.handler;
   }
